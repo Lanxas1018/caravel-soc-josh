@@ -14,6 +14,7 @@ MEMORY {
 	dff2 : ORIGIN = 0x00000400, LENGTH = 0x00000200
 	flash : ORIGIN = 0x10000000, LENGTH = 0x01000000
 	mprj : ORIGIN = 0x30000000, LENGTH = 0x00100000
+	mprjram : ORIGIN = 0x38000000, LENGTH = 0x00001000
 	hk : ORIGIN = 0x26000000, LENGTH = 0x00100000
 	csr : ORIGIN = 0xf0000000, LENGTH = 0x00010000
 }
@@ -68,10 +69,20 @@ SECTIONS
 		. = ALIGN(8);
 		_ebss = .;
 		_end = .;
-	} > dff
+	} > dff AT > flash
+
+	.mprjram :
+	{
+		. = ALIGN(8);
+		_fsram = .;
+
+	} > mprjram AT > flash
 }
 
 PROVIDE(_fstack = ORIGIN(dff2) + LENGTH(dff2));
 
 PROVIDE(_fdata_rom = LOADADDR(.data));
 PROVIDE(_edata_rom = LOADADDR(.data) + SIZEOF(.data));
+
+PROVIDE(_esram = ORIGIN(mprjram) + SIZEOF(.mprjram));
+PROVIDE(_esram_rom = LOADADDR(.mprjram));

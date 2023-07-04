@@ -58,6 +58,19 @@ crt_init:
   la a0, trap_entry
   csrw mtvec, a0
 
+sram_init:
+  la a0, _fsram
+  la a1, _esram
+  la a2, _esram_rom
+sram_loop:
+  beq a0,a1,sram_done
+  lw a3,0(a2)
+  sw a3,0(a0)
+  add a0,a0,4
+  add a2,a2,4
+  j sram_loop
+sram_done:    
+
 data_init:
   la a0, _fdata
   la a1, _edata
