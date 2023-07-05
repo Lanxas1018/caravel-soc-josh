@@ -19,6 +19,8 @@
 #include <defs.h>
 #include <stub.c>
 
+extern int adder();
+
 // --------------------------------------------------------
 
 /*
@@ -117,12 +119,16 @@ void main()
 	// Configure LA probes from [63:32] as inputs to disable counter write
 	reg_la1_oenb = reg_la1_iena = 0x00000000;    
 
+/*
 	while (1) {
 		if (reg_la0_data_in > 0x1F4) {
 			reg_mprj_datal = 0xAB410000;
 			break;
 		}
 	}
+*/	
+	reg_mprj_datal = adder() << 16;	
+
 	//print("\n");
 	//print("Monitor: Test 1 Passed\n\n");	// Makes simulation very long!
 	reg_mprj_datal = 0xAB510000;

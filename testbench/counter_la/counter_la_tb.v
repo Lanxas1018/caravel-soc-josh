@@ -157,7 +157,11 @@ module counter_la_tb;
 	initial begin
 		wait(checkbits == 16'hAB40);
 		$display("LA Test 1 started");
-		wait(checkbits == 16'hAB41);
+		//wait(checkbits == 16'hAB41);
+
+		wait(checkbits == 16'h2233);
+		$display("Call function adder() in User Project SRAM (mprjsram, 0x38000000) return value passed, 0x%x", checkbits);		
+
 		wait(checkbits == 16'hAB51);
 		$display("LA Test 2 passed");
 		#10000;
