@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Tue Jul  4 09:15:25 2023
+[*] Thu Jul  6 02:40:26 2023
 [*]
-[dumpfile] "/home/josh/caravel-soc/testbench/counter_la/counter_la.vcd"
-[dumpfile_mtime] "Tue Jul  4 09:09:39 2023"
-[dumpfile_size] 24280258
-[savefile] "/home/josh/caravel-soc/testbench/counter_la/waveform.gtkw"
-[timestart] 0
+[dumpfile] "/home/josh/my/caravel-soc/testbench/counter_la/counter_la.vcd"
+[dumpfile_mtime] "Thu Jul  6 02:37:50 2023"
+[dumpfile_size] 24514133
+[savefile] "/home/josh/my/caravel-soc/testbench/counter_la/waveform.gtkw"
+[timestart] 123153400
 [size] 1908 942
 [pos] 3961 68
-*-26.000000 1190500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.000000 123687500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] counter_la_tb.
 [treeopen] counter_la_tb.uut.
 [treeopen] counter_la_tb.uut.mprj.
@@ -70,7 +70,6 @@ counter_la_tb.uut.soc.core.shared_dat_w[31:0]
 counter_la_tb.uut.soc.core.mgmtsoc_dbus_dbus_ack
 @22
 counter_la_tb.uut.soc.core.mgmtsoc_dbus_dbus_adr[29:0]
-@23
 counter_la_tb.uut.soc.core.mgmtsoc_dbus_dbus_dat_w[31:0]
 @200
 -
@@ -102,6 +101,8 @@ counter_la_tb.uut.mprj.mprj.user_ram4k.reset
 counter_la_tb.uut.mprj.mprj.user_ram4k.clk
 @22
 counter_la_tb.uut.mprj.mprj.user_ram4k.address[31:0]
+@23
+counter_la_tb.uut.mprj.mprj.user_ram4k.delayed[15:0]
 @28
 counter_la_tb.uut.mprj.mprj.user_ram4k.ack
 @22
