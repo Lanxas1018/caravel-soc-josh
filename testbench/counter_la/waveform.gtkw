@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Thu Jul  6 02:40:26 2023
+[*] Tue Jul 18 07:11:42 2023
 [*]
 [dumpfile] "/home/josh/my/caravel-soc/testbench/counter_la/counter_la.vcd"
-[dumpfile_mtime] "Thu Jul  6 02:37:50 2023"
-[dumpfile_size] 24514133
+[dumpfile_mtime] "Tue Jul 18 07:01:53 2023"
+[dumpfile_size] 24536884
 [savefile] "/home/josh/my/caravel-soc/testbench/counter_la/waveform.gtkw"
-[timestart] 123153400
+[timestart] 0
 [size] 1908 942
-[pos] 3961 68
-*-17.000000 123687500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 6060 129
+*-28.000000 638000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] counter_la_tb.
 [treeopen] counter_la_tb.uut.
 [treeopen] counter_la_tb.uut.mprj.
@@ -95,26 +95,41 @@ counter_la_tb.uut.soc.core.VexRiscv.dBusWishbone_DAT_MOSI[31:0]
 counter_la_tb.uut.soc.core.VexRiscv.dBusWishbone_WE
 @200
 -
--user_ram4k
+-mprj
 @28
-counter_la_tb.uut.mprj.mprj.user_ram4k.reset
-counter_la_tb.uut.mprj.mprj.user_ram4k.clk
+counter_la_tb.uut.mprj.mprj.clk
+counter_la_tb.uut.mprj.mprj.decoded
 @22
-counter_la_tb.uut.mprj.mprj.user_ram4k.address[31:0]
-@23
-counter_la_tb.uut.mprj.mprj.user_ram4k.delayed[15:0]
+counter_la_tb.uut.mprj.mprj.delayed_count[15:0]
+counter_la_tb.uut.mprj.mprj.rdata[31:0]
 @28
-counter_la_tb.uut.mprj.mprj.user_ram4k.ack
+counter_la_tb.uut.mprj.mprj.ready
+counter_la_tb.uut.mprj.mprj.valid
+counter_la_tb.uut.mprj.mprj.wbs_ack_o
+counter_la_tb.uut.mprj.mprj.wbs_we_i
+counter_la_tb.uut.mprj.mprj.wbs_cyc_i
+counter_la_tb.uut.mprj.mprj.wbs_stb_i
 @22
-counter_la_tb.uut.mprj.mprj.user_ram4k.di[31:0]
-counter_la_tb.uut.mprj.mprj.user_ram4k.we[3:0]
-counter_la_tb.uut.mprj.mprj.user_ram4k.do[31:0]
+counter_la_tb.uut.mprj.mprj.wbs_adr_i[31:0]
+counter_la_tb.uut.mprj.mprj.wbs_dat_i[31:0]
+counter_la_tb.uut.mprj.mprj.wbs_dat_o[31:0]
 @28
-counter_la_tb.uut.mprj.mprj.user_ram4k.en
+counter_la_tb.uut.mprj.mprj.wbs_stb_i
 @22
-counter_la_tb.uut.mprj.mprj.user_ram4k.rdata[31:0]
+counter_la_tb.uut.mprj.mprj.wstrb[3:0]
+@200
+-
+-User Bram
 @28
-counter_la_tb.uut.mprj.mprj.user_ram4k.ready
+counter_la_tb.uut.mprj.mprj.user_bram.CLK
+@22
+counter_la_tb.uut.mprj.mprj.user_bram.Di0[31:0]
+counter_la_tb.uut.mprj.mprj.user_bram.Do0[31:0]
+@28
+counter_la_tb.uut.mprj.mprj.user_bram.EN0
+@22
+counter_la_tb.uut.mprj.mprj.user_bram.WE0[3:0]
+counter_la_tb.uut.mprj.mprj.user_bram.A0[31:0]
 @200
 -
 -RAM256

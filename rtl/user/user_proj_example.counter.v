@@ -36,7 +36,8 @@
  */
 
 module user_proj_example #(
-    parameter BITS = 32
+    parameter BITS = 32,
+    parameter DELAYS=10
 )(
 `ifdef USE_POWER_PINS
     inout vccd1,	// User area 1 1.8V supply
@@ -84,14 +85,15 @@ module user_proj_example #(
     wire [31:0] la_write;
     wire decoded;
 
-    reg decoded_reg;
+    reg ready;
+    reg [BITS-17:0] delayed_count;
 
     // WB MI A
-    assign decoded = decoded_reg;
     assign valid = wbs_cyc_i && wbs_stb_i && decoded; 
     assign wstrb = wbs_sel_i & {4{wbs_we_i}};
     assign wbs_dat_o = rdata;
     assign wdata = wbs_dat_i;
+    assign wbs_ack_o = ready;
 
     // IO
     assign io_out = count;
@@ -108,10 +110,22 @@ module user_proj_example #(
     assign clk = (~la_oenb[64]) ? la_data_in[64]: wb_clk_i;
     assign rst = (~la_oenb[65]) ? la_data_in[65]: wb_rst_i;
 
-    always @(*) begin
-        decoded_reg = 1'b0;
-        if ((wbs_adr_i[31:12] == 20'h38000)) begin
-            decoded_reg = 1'b1;
+    assign decoded = wbs_adr_i[31:20] == 12'h380 ? 1'b1 : 1'b0;
+
+    always @(posedge clk) begin
+        if (rst) begin
+            ready <= 1'b0;
+            delayed_count <= 16'b0;
+        end else begin
+            ready <= 1'b0;
+            if ( valid && !ready ) begin
+                if ( delayed_count == DELAYS ) begin
+                    delayed_count <= 16'b0;
+                    ready <= 1'b1;
+                end else begin
+                    delayed_count <= delayed_count + 1;
+                end
+            end
         end
     end
 
@@ -132,67 +146,15 @@ module user_proj_example #(
     );
 */
 
-    user_ram4k #(
-        .BITS(BITS)
-    ) user_ram4k (
-        .clk(clk),
-        .reset(rst),
-        .we(wstrb),
-        .en(valid),
-        .di(wbs_dat_i),
-        .do(rdata),
-        .ack(wbs_ack_o),
-        .address(wbs_adr_i)
+    bram user_bram (
+        .CLK(clk),
+        .WE0(wstrb),
+        .EN0(valid),
+        .Di0(wbs_dat_i),
+        .Do0(rdata),
+        .A0(wbs_adr_i)
     );
 
-endmodule
-
-module user_ram4k #(
-    parameter BITS=32,
-    parameter DELAYS=10
-    )
-(
-    input wire clk,
-    input wire reset,
-    input wire [3:0] we,
-    input wire en,
-    input wire [BITS-1:0] di,
-    output wire [BITS-1:0] do,
-    output wire ack,
-    input wire [BITS-1:0] address
-);
-    reg ready;
-    reg [BITS-1:0] rdata;
-    reg [BITS-1:0] BlockRam[1023:0];
-    reg [BITS-17:0] delayed;
-
-    assign do = rdata;
-    assign ack = ready;
-
-    always @(posedge clk) begin
-        if (reset) begin
-            rdata <= 32'b0;
-            ready <= 1'b0;
-            delayed <= 16'b0;
-        end else begin
-            ready <= 1'b0;
-            if (en && !ack) begin
-                if ( (delayed == DELAYS) ) begin
-                    delayed <= 16'b0;
-                    rdata <= BlockRam[address[11:0]];
-                    ready <= 1'b1;
-                    if(we[0]) BlockRam[address[11:0]][7: 0] <= di[7:0];
-                    if(we[1]) BlockRam[address[11:0]][15:8] <= di[15:8];
-                    if(we[2]) BlockRam[address[11:0]][23:16] <= di[23:16];
-                    if(we[3]) BlockRam[address[11:0]][31:24] <= di[31:24];
-                end begin
-                    delayed = delayed + 1;
-                end
-            end else begin
-                rdata <= 32'b0;                
-            end
-        end
-    end
 endmodule
 
 module counter #(
